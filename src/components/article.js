@@ -1,13 +1,15 @@
 import React from 'react'
+import Comment from './comment'
 
 function Article(props) {
   const { article, isOpen, toggleOpen } = props
   return (
-    <div>
+    <article>
       <h3>{article.title}</h3>
-      <button onClick={toggleOpen}>{isOpen ? 'close' : 'open'}</button>
+      <button onClick={toggleOpen}>{isOpen ? 'close' : 'open'} article</button>
       {getBody(props)}
-    </div>
+      <Comment article={article} />
+    </article>
   )
 }
 
