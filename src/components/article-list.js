@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Article from './article'
 import accordion from '../decorators/accordion'
 
 export class ArticleList extends Component {
   setListRef = (ref) => {
     this.list = ref
+  }
+
+  static propTypes = {
+    articles: PropTypes.array,
+    openItemId: PropTypes.oneOfType([PropTypes.number, PropTypes.bool, PropTypes.string]),
+    toggleOpenItem: PropTypes.func.isRequired
   }
 
   state = {
