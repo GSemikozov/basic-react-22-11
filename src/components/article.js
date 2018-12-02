@@ -1,22 +1,28 @@
 import React from 'react'
-import Comment from './comment'
+import CommentList from './comment-list'
 
 function Article(props) {
   const { article, isOpen, toggleOpen } = props
   return (
-    <article>
+    <div>
       <h3>{article.title}</h3>
-      <button onClick={toggleOpen}>{isOpen ? 'close' : 'open'} article</button>
+      <button onClick={toggleOpen} className="test__article--btn">
+        {isOpen ? 'close' : 'open'}
+      </button>
       {getBody(props)}
-      <Comment article={article} />
-    </article>
+    </div>
   )
 }
 
 function getBody({ isOpen, article }) {
   if (!isOpen) return null
 
-  return <section>{article.text}</section>
+  return (
+    <section className="test__article--body">
+      {article.text}
+      <CommentList comments={article.comments} />
+    </section>
+  )
 }
 
 export default Article
