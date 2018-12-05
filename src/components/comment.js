@@ -10,19 +10,10 @@ function Comment({ comment }) {
 }
 
 Comment.propTypes = {
-  // just try false value to display custom error
-  comment: PropTypes.arrayOf(function(propValue, key, componentName, location, propFullName) {
-    if (!/matchme/.test(propValue[key])) {
-      return new Error(
-        'Invalid prop `' +
-          propFullName +
-          '` supplied to' +
-          ' `' +
-          componentName +
-          '`. Validation failed.'
-      )
-    }
-  })
+  comment: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    user: PropTypes.string
+  }).isRequired
 }
 
 export default Comment
