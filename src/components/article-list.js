@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Article from './article'
 import accordion from '../decorators/accordion'
 
 export class ArticleList extends Component {
-  setListRef = (ref) => {
-    this.list = ref
+  static propTypes = {
+    articles: PropTypes.array.isRequired,
+    openItemId: PropTypes.string,
+    toggleOpenItem: PropTypes.func.isRequired
   }
 
-  static propTypes = {
-    articles: PropTypes.array,
-    openItemId: PropTypes.oneOfType([PropTypes.number, PropTypes.bool, PropTypes.string]),
-    toggleOpenItem: PropTypes.func.isRequired
+  setListRef = (ref) => {
+    this.list = ref
   }
 
   state = {
@@ -47,4 +48,6 @@ export class ArticleList extends Component {
   }
 }
 
-export default accordion(ArticleList)
+export default connect((state) => ({
+  articles: state.articles
+}))(accordion(ArticleList))
