@@ -4,10 +4,13 @@ import CommentList from '../comment-list'
 import { connect } from 'react-redux'
 import { deleteArticle, loadArticleById } from '../../ac'
 import Loader from '../common/loader'
+import { articleListSelector, articleSelector } from '../../selectors'
 
 class Article extends Component {
   render() {
     const { article, isOpen, toggleOpen } = this.props
+    if (!article) return null
+
     return (
       <div>
         <h3>{article.title}</h3>
@@ -20,12 +23,20 @@ class Article extends Component {
     )
   }
 
-  componentDidUpdate(oldProps) {
-    const { isOpen, loadArticleById, article } = this.props
+  componentDidMount() {
+    const { isOpen, loadArticleById, id } = this.props
 
-    if (isOpen && !oldProps.isOpen && !article.text) loadArticleById(article.id)
+    if (isOpen) loadArticleById(id)
+  }
+  /*
+
+  componentDidUpdate() {
+    const { isOpen, loadArticleById, id } = this.props
+
+    if (isOpen) loadArticleById(id)
   }
 
+*/
   handleDeleteClick = () => {
     const { deleteArticle, article } = this.props
     deleteArticle(article.id)
@@ -55,6 +66,8 @@ Article.propTypes = {
 }
 
 export default connect(
-  null,
+  (state, props) => ({
+    article: articleSelector(state, props)
+  }),
   { deleteArticle, loadArticleById }
 )(Article)
